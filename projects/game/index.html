@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Главная</title>
+		<meta charset="utf-8">
+		
+		<style>
+		
+			body{
+				text-align:center;
+			}
+		
+			#basic{
+				display:none;
+				text-align:center;
+				width:500px;
+				height:600px;
+				margin:0 auto;	
+				border:1px dashed black;
+				padding:5px 5px 30px 5px;
+				border-radius:10px;
+				}
+		
+			#bas{
+				font-size:30px;
+				}		
+				
+			#text_taimer{
+				
+				visibility:hidden;
+			}				
+		
+			table{
+				
+				display:none;
+				width:500px;
+				height:500px;
+				border-spacing:5px;
+				border-radius:10px;
+			}
+			
+			table tr td{
+				border:1px dashed black;
+				border-radius:10px;
+			}	
+			
+			table tr td:hover{
+				box-shadow: 0px 0px 5px 4px rgba(0, 0, 0, 0.2);
+				cursor:pointer;
+			}
+
+			#buttonCiklGame{
+				visibility:hidden;
+				margin-top:10px;
+				padding:5px;
+				width:200px;
+				height:30px;
+				border-radius:20px;
+				border:1px dashed black;
+			}
+			
+			
+			
+			#buttonNextGame:hover{
+				box-shadow: 0px 0px 5px 4px rgba(0, 0, 0, 0.2);
+				cursor:pointer;
+			}
+			
+			#buttonCiklGame:hover{
+				box-shadow: 0px 0px 5px 4px rgba(0, 0, 0, 0.2);
+				cursor:pointer;
+			}			
+			
+			#buttonNextGame{
+				display:none;
+				padding:5px;
+				width:200px;
+				height:30px;
+				border-radius:20px;
+				border:1px dashed black;				
+			}
+			
+			#buttonStartGame{
+				width:400px;
+				height:70px;
+				border-radius:40px;
+				border:1px dashed black;
+				margin-top:200px;
+				font-size:30px;
+				text-decoration:blink;
+				background-color:while;
+			}
+			
+			#buttonStartGame:hover{
+				box-shadow: 0px 0px 5px 4px rgba(0, 0, 0, 0.2);
+				cursor:pointer;
+			}
+			
+			#live{
+				display:inline-block;
+				width:140px;
+			}
+		
+			#info{
+				display:none;
+				font-size:20px;
+				margin-top:10px;
+				height:40px;
+			}
+			
+			#livel{
+				width:40px;
+				height:40px;
+				display:inline-block;
+			}			
+			
+			#div1{
+				width:23px;
+				height:40px;
+				display:inline-block;
+			}
+			
+			#buttonStart_2_Game{
+				display:none;
+				padding:5px;
+				width:200px;
+				height:30px;
+				border-radius:20px;
+				border:1px dashed black;
+			}
+			
+			#buttonStart_2_Game:hover{
+				box-shadow: 0px 0px 5px 4px rgba(0, 0, 0, 0.2);
+				cursor:pointer;
+			}
+			
+			#funNotTrueNum{
+				
+				animation-name:test-animation;
+				animation-duration: 100ms;
+				animation-iteration-count:5; 
+			}
+			
+			@keyframes test-animation {
+			0% {
+				box-shadow: 0px 0px 5px 4px rgba(255, 0, 0, 0.2);
+				background:red;
+				}
+			50% {
+				box-shadow: 0px 0px 5px 4px rgba(0, 0, 0, 0.2);
+				background:black;
+				}				
+			100% {
+				box-shadow: 0px 0px 5px 4px rgba(255, 0, 0, 0.2);
+				background:red;
+				}
+			}
+			
+			#funNotTrueNum1{
+				animation-name:test-animation1;
+				animation-duration: 2s;
+				animation-iteration-count:1;
+				animation-timing-function:cubic-bezier(0.1, 0.7, 1.0, 0.1);
+			}
+			
+			@keyframes test-animation1 {
+			0% {
+				font-size:10px;
+				}
+			
+			100% {
+				font-size:80px;
+				}
+			}			
+			
+		</style>
+	</head>
+	
+	<body>
+		
+		<input type="submit" value="Начать игру!" id="buttonStartGame">
+		<div id="basic">
+		
+		<div id="bas">
+		<span id="text_taimer">Время до конца игры: </span><span id="taimer"></span>
+		</div>
+		
+		<div id="info"><span id="text_livel">Уровень:</span><div id="livel"></div><span id="text_live">Количество жизней:</span><span id="live"></span></div>
+		
+		<table>
+		</table>
+		
+		<input type="submit" value="Играть с начала" id="buttonCiklGame"> <input type="submit" value="Играть с начала этот уровень" id="buttonStart_2_Game"><input type="submit" value="Следующий уровень" id="buttonNextGame">
+		
+		</div>
+		
+		<script>
+					
+					
+			
+			var buttonStartGame=document.getElementById("buttonStartGame");//получаем доступ к самой главной кнопке 
+			buttonStartGame.addEventListener("click", funStartGame);//к главной кнопке вешаем событие на клик и функцию funStartGame
+			
+			var text_taimer=document.getElementById("text_taimer");//получаем доступ к надписи Время до конца игры
+			var taimer=document.getElementById("taimer");//получаем доступ к таймеру
+			
+			var table=document.querySelector("table");//получаем доступ к таблице
+			
+			var buttonCiklGame=document.getElementById("buttonCiklGame");//получаем доступ к кнопке играть с начала
+			buttonCiklGame.addEventListener("click", funStartGame);//вешаем событие на данную кнопку и функцию buttonCiklGame			
+			
+			var buttonNextGame=document.getElementById("buttonNextGame");//получаем доступ к кнопке следующая игра
+			buttonNextGame.addEventListener("click", funNextGame);//вешаем событие на клик и функцию funNextGame
+			
+			var buttonStart_2_Game=document.getElementById("buttonStart_2_Game");//получаем доступ к кнопке играть эту игру занаво
+			buttonStart_2_Game.addEventListener("click",funStart_2_Game);//вешаем на нее событие и функцию funStart_2_Game
+			
+			
+			
+
+			
+
+			
+			var arrColor=["Black","Gray","Silver","Fuchsia","Purple","Red","Maroon","Yellow","Olive","Lime","Green","Aqua","Teal","Blue","Navy","RosyBrown",
+			"SandyBrown","Goldenrod","DarkGoldenRod","Peru","Chocolate","SaddleBrown","Sienna","Brown","Maroon","LightSalmon","Coral","Tomato","OrangeRed",
+			"DarkOrange","Orange","Black","Gray","Silver","Fuchsia","Purple","Red","Maroon","Yellow","Olive","Lime","Green","Aqua","Teal","Blue","Navy","RosyBrown",
+			"SandyBrown","Goldenrod","DarkGoldenRod","Peru","Chocolate","SaddleBrown","Sienna","Brown","Maroon","LightSalmon","Coral","Tomato","OrangeRed",
+			"DarkOrange","Orange","Black","Gray","Silver","Fuchsia","Purple","Red","Maroon","Yellow","Olive","Lime","Green","Aqua","Teal","Blue","Navy","RosyBrown",
+			"SandyBrown","Goldenrod","DarkGoldenRod","Peru","Chocolate","SaddleBrown","Sienna","Brown","Maroon","LightSalmon","Coral","Tomato","OrangeRed",
+			"DarkOrange","Orange"];//массив с названиями цветов
+			
+			var arrayFontSize=[10,12,15,17,20,22,25,27,30,32,35,37,40,42,45,47,50,10,12,15,17,20,22,25,27,30,32,35,37,40,42,45,47,50,
+			10,12,15,17,20,22,25,27,30,32,35,37,40,42,45,47,50,10,12,15,17,20,22,25,27,30,32,35,37,40,42,45,47,50,10,12,15,17,20,22,25,27,30,32,35,37,40,42,45,47,50,
+			10,12,15,17,20,22,25,27,30,32,35,37,40,42,45,47,50,10,12,15,17,20,22,25,27,30,32,35,37,40,42,45,47,50,10,12,15,17,20,22,25,27,30,32,35,37,40,42,45,47,50,
+			10,12,15,17,20,22,25,27,30,32,35,37,40,42,45,47,50];//массив с размерами шрифтов под выводимые цифры		
+			
+			var livel=document.getElementById("livel");//получаем доступ к уровням
+			var livel_liv=1;//в данную переменную записывается промежуточный уровень который далле передает свое значение livel
+			
+			var stopTaimer;//в данной переменной хранится айди таймера который отвечает за время игры
+			var iiii=0;
+			
+			var trr=2;//изначальное количество строк 
+			var tdd=2;//изначальное количество столбцов
+			
+			var audio;//в данной переменной хранится музыка и мы периодически останавливаем ее и запускаем если ее не выносить в глобальную переменную
+			//то при каждом новом обращении к файлу запускается новый и играет старая 
+			
+			var secund=10;//начальное значение секунд для таймера
+			var sec;//промежуточное значение секунд которое увеличивается от рауда к рауду
+			
+			var live=document.getElementById("live");//получаем доступ к жизням
+			var livels=0;//количество жизней за пройденные раунды по дефолту ноль
+			
+			
+			
+			function funStartGame()//первая функция которая запускает всю игру 
+				{
+				var basic=document.getElementById('basic').style.display="inline-block";//получаем доступ к диву в который помещена вся разметка и 
+				//делаем его видимым
+				table.innerHTML="";//делаем таблицу пустой после вывода в нее оповещения о победе
+				table.removeAttribute("id","funNotTrueNum1");//удаляем айди у таблицы который присваивали во время победы через данный айди подключаем анимацию
+				table.style.paddingTop=0;//убераем внутриний отступ с верху у таблицы который добавляли для центрирования вывода текста о победе
+				secund=10;//записываем в переменную время до окончания уровня так как предыдущие игры обнавляют данное значение
+				if(stopTaimer!=undefined)//если код хоть раз выполнялся то в переменной stopTaimer будет записан айди и если он записан то данная переменная не
+					{//равняется undefined и иф выполняется
+					clearInterval(stopTaimer);//останавливаем таймер
+					funClearTable();//функция по очистке таблицы от строк 
+					audio.pause();//останавливается фоновая музыка
+					audio.currentTime=0;//фоновая музыка устанавливается на начало
+					}
+				buttonStart_2_Game.style.display="none";//скрываем кнопку 
+				buttonStartGame.style.display="none";//скрываем самую главную первую кнопку начало всей игры
+				text_taimer.style.visibility = "visible";//место где выводится текст "Время до конца игры " делаем видемым
+				text_taimer.innerHTML="Время до конца игры: ";//записываем текст 
+				
+				table.style.display="table";//таблицу делаем видимой
+
+				
+				buttonCiklGame.style.visibility = "visible";//делаем видимой кнопку начать с начала				
+				
+				audio=new Audio();//Создаем аудио файл
+				audio.src="1.mp3";//Записываем в него путь до аудио файла
+				audio.play();//включаем аудио файл
+				
+					
+				taimer.style.visibility = "visible";//делаем видимым место где отображается таймер
+					
+	
+				buttonNextGame.style.display="none";//прячем кнопку следующая игра которая была видема с предыдущей игры
+				
+				livels=0;//записываем в количество жизней ноль так как с прошлой игры возвращаются свои жизни
+				
+				trr=2;//устанавливаем количество строк
+				tdd=2;//устанавливаем количество столбцов
+
+				
+				var info=document.getElementById("info");//получаем доступ к блоку в котором выводится УРОВЕНЬ И КОЛИЧЕСТВО ЖИЗНЕЙ
+				info.style.display="inline-block";//делаем его видимым
+				
+				livel_liv=1;//перезаписываем в переменную уровень 
+				livel.innerHTML=livel_liv;//записывае номер уровня
+				
+				funEventTrAndTd(trr,tdd);//создание строк и стобцов
+				funTaimer();//запуск таймера
+				var baseTd=funTakeNumberTd();//получить количество столбцов, получаем количество столбцов
+				window.lengthTd=funEventArrayNumber(baseTd);//создать массиы чисел от 1 до длины количества столбцов, и записываем массив в lengthTd
+				var arrNumberRandom=funGeneratorRandomNumber(baseTd,0,baseTd);//создает случайные числа и записывает их в массив , возвращает массив с этими числами
+				var arrFontSize=funGeneratorRandomNumber(baseTd,0,arrayFontSize.length);//получаем массив размеров шрифтов
+				var takeArrColor=funGeneratorRandomNumber(baseTd,0,arrColor.length);//получаем массив цветов
+				funRecordInTdFromArray(arrNumberRandom,arrFontSize,takeArrColor);//записываем число шрифт цвет
+				funAddEventOnTd();//вешаем событие на столбец
+				funLive(livels);//добавляем жизни
+				
+				}
+				
+			function funEventTrAndTd(trr,tdd)//функция по созданию строк и столбцов
+				{
+				var a=table.querySelectorAll("tr");
+				for(var i=0; i<trr; i++)
+					{
+					var tr=document.createElement("tr");
+					for(var j=0; j<tdd; j++)
+						{
+						var td=document.createElement("td");
+						tr.appendChild(td)
+						}
+					table.appendChild(tr);	
+					}
+				}
+				
+			function funNextGame()//запускает следующую игру
+				{
+				table.innerHTML="";
+				table.removeAttribute("id","funNotTrueNum1");
+				table.style.paddingTop=0;
+				audio.play();
+				buttonNextGame.style.display="none";
+				livel_liv++;
+				livel.innerHTML=livel_liv;
+				trr++;
+				tdd++;
+				livels++;
+				secund=Math.floor(secund*1.6);
+				//////////////////////////////////////////////////////////////////////////////////
+				clearInterval(stopTaimer);
+				funClearTable();
+				//audio.pause();
+				//audio.currentTime=0;
+				//////////////////////////////////////////////////////////////////////////////////
+				text_taimer.innerHTML="Время до конца игры: ";
+				taimer.style.visibility = "visible";
+				funEventTrAndTd(trr,tdd);//создание строк и стобцов
+				funTaimer();//запуск таймера
+				var baseTd=funTakeNumberTd();//получить количество столбцов, получаем количество столбцов
+				window.lengthTd=funEventArrayNumber(baseTd);//создать массиы чисел от 1 до длины количества столбцов, и записываем массив в lengthTd
+				var arrNumberRandom=funGeneratorRandomNumber(baseTd,0,baseTd);//создает случайные числа и записывает их в массив , возвращает массив с этими числами
+				var arrFontSize=funGeneratorRandomNumber(baseTd,0,arrayFontSize.length);//получаем массив размеров шрифтов
+				var takeArrColor=funGeneratorRandomNumber(baseTd,0,arrColor.length);//получаем массив цветов
+				funRecordInTdFromArray(arrNumberRandom,arrFontSize,takeArrColor);//записываем число шрифт цвет
+				funAddEventOnTd();//вешаем событие на столбец
+				funLive(livels);//добавляем жизни
+				//////////////////////////////////////////////////////////////////////////////////
+				}	
+				
+			function funTaimer()//функция таймера
+				{
+				//secund=10;
+				sec=secund;
+				taimer.innerHTML=sec;
+
+				stopTaimer=setInterval(function()
+					{
+					sec--;
+					taimer.innerHTML=sec;
+					if(sec==0)
+						{
+						funNotTrueNumber1(table);
+						audio.pause();
+						audio.currentTime=0;
+						clearInterval(stopTaimer);
+						text_taimer.innerHTML="Вы проиграли!";	
+						taimer.style.visibility = "hidden";
+						funRemoveEventOnTd();
+						 iiii=0;
+						var audio1=new Audio();
+						audio1.src="2.mp3";
+						audio1.play();
+						 if(livel_liv!=1)
+							{
+							if(livels!=0)
+								{
+								buttonStart_2_Game.style.display="inline-block";//////////////////////////////////////////////////////////////////////////////////////
+								}
+							}
+						}
+					},1000); 
+				}
+				
+				function funTakeNumberTd()//получаем общее количество столбцов
+					{
+					var sumTd=0;
+					var a=table.querySelectorAll("tr");
+					for(var i=0; i<a.length; i++)
+						{
+						sumTd+=a[i].querySelectorAll("td").length;
+						}
+					return sumTd;	
+					}
+					
+				function funGeneratorRandomNumber(lengthArr,min,max)//функция создает массив с случайными неповторяющимися числами
+					{
+					var arr=[];
+					for(var i=0; i<lengthArr; i++)
+						{
+						var a=Math.ceil(Math.random() * (max - min)) + min;
+						var c=0;
+						for(var j=0; j<arr.length; j++)
+							{
+							if(a!=arr[j])
+								{
+								c++;
+								}
+							else
+								{
+								i--;
+								}
+							}
+						if(c==arr.length)
+							{
+							arr.push(a);
+							}
+						}
+					return arr;	
+					}
+					
+				function funRecordInTdFromArray(arrNumber,fontSize,color)//записывает в столбы номер размер шрифта и цвет
+					{
+					var a=table.querySelectorAll("tr");
+					var jj=0;
+					for(var i=0; i<a.length; i++)
+						{
+						var sumTd=a[i].querySelectorAll("td");
+						for(var j=0; j<sumTd.length;jj++, j++)
+							{
+							sumTd[j].innerHTML=arrNumber[jj];
+							sumTd[j].style.fontSize=arrayFontSize[fontSize[jj]]+"px";
+							sumTd[j].style.color=arrColor[color[jj]];
+							sumTd[j].style.textAlign="center";
+							sumTd[j].style.background="white";
+							}
+						}
+					}
+					
+					function funEventArrayNumber(baseTd)//функция создает масси чисел от 1 до длины количества столбцов т.е. до baseTd получаем от 
+						{//предыдущей функции количество столбцов
+						var arr=[];
+						for(var i=1; i<=baseTd; i++)
+							{
+							arr.push(i);
+							}
+						return arr;
+						}
+					
+					function funAddEventOnTd()//вешаем событие на каждую ячеку
+						{
+						var a=table.querySelectorAll("tr");
+						var jj=0;
+						for(var i=0; i<a.length; i++)
+							{
+							var sumTd=a[i].querySelectorAll("td");
+							for(var j=0; j<sumTd.length;jj++, j++)
+								{
+								sumTd[j].addEventListener("click", funDefinitionTd)
+								}
+							}
+						}	
+						
+					function funRemoveEventOnTd()//функция удаляет события с ячеек
+						{
+						var a=table.querySelectorAll("tr");
+						var jj=0;
+						for(var i=0; i<a.length; i++)
+							{
+							var sumTd=a[i].querySelectorAll("td");
+							for(var j=0; j<sumTd.length;jj++, j++)
+								{
+								sumTd[j].removeEventListener("click", funDefinitionTd);
+								}
+							}
+						}						
+					
+					
+					function funDefinitionTd(event)//функция определяет правельность произведенного нажатия на ячейку
+						{
+						if(event.target.tagName=="TD")
+							{
+							for(iiii; iiii<lengthTd.length; iiii++)
+								{
+								if(lengthTd[iiii]==event.target.innerHTML)
+									{
+									var audio2=new Audio();
+									audio2.src="3.mp3";
+									audio2.play();
+									event.target.remove();//удаляются ячейки
+
+									iiii++;
+									if(iiii==lengthTd.length)
+										{
+										audio.pause();
+										audio.currentTime=0;
+
+										
+										table.innerHTML="<font color=red>Вы победили!</font>";
+										table.style.paddingTop="200px";
+										table.setAttribute("id","funNotTrueNum1");
+										
+										table.style.fontSize="80px";
+										
+										taimer.style.visibility = "hidden";
+										clearInterval(stopTaimer);
+										iiii=0;
+										buttonNextGame.style.display="inline-block";
+										var audio3=new Audio();
+										audio3.src="4.mp3";
+										audio3.play();
+										}
+									}
+								else
+									{
+									funNotTrueNumber(event.target);//анимация на неверное нажатие
+									var d=live.children.length;
+									if(d!=0)
+										{
+										
+										live.children[0].remove();
+										livels--;
+										}
+									else
+										{
+										funNotTrueNumber1(table);//анимация на конец игры
+										audio.pause();
+										audio.currentTime=0;
+										clearInterval(stopTaimer);
+										text_taimer.innerHTML="Вы проиграли!";	
+										taimer.style.visibility = "hidden";
+										funRemoveEventOnTd();
+										iiii=0;
+										}
+									}
+								break;	
+								}
+							}
+						}
+						
+					function funClearTable()//функция по очистке таблицы от строк 
+						{
+						var a=table.querySelectorAll("tr");
+						//var jj=0;
+						for(var i=0; i<a.length; i++)
+							{
+							a[i].remove();
+							}
+						}
+						
+					function funLive(num)//функция добавленя жизни
+						{
+						funDeletLive();
+						for(var i=0; i<num; i++)
+							{
+							var heart=document.createElement("IMG");//создаем картинку
+							heart.src="heard.png";//записываем в созданую картинку нашу
+							var div1=document.createElement("div");
+							div1.setAttribute("id","div1");
+							div1.appendChild(heart);
+							live.appendChild(div1);
+							}
+						}
+					
+					function funDeletLive()//фукция очистки жизней
+						{
+						var a=live.children.length;
+						for(var i=0; i<a; i++)
+							{
+							live.children[0].remove();
+							}
+						}
+					
+					function funStart_2_Game()//функция запуска именно той игры в которой проиграли
+						{
+						buttonStart_2_Game.style.display="none";
+						live.children[0].remove();
+						livels--;
+						clearInterval(stopTaimer);
+						funClearTable();
+						audio.play();
+						taimer.style.visibility = "visible";
+						text_taimer.innerHTML="Время до конца игры: ";
+						
+						funEventTrAndTd(trr,tdd);//создание строк и стобцов
+						funTaimer();//запуск таймера
+						var baseTd=funTakeNumberTd();//получить количество столбцов, получаем количество столбцов
+						window.lengthTd=funEventArrayNumber(baseTd);//создать массиы чисел от 1 до длины количества столбцов, и записываем массив в lengthTd
+						var arrNumberRandom=funGeneratorRandomNumber(baseTd,0,baseTd);//создает случайные числа и записывает их в массив , возвращает массив с этими числами
+						var arrFontSize=funGeneratorRandomNumber(baseTd,0,arrayFontSize.length);//получаем массив размеров шрифтов
+						var takeArrColor=funGeneratorRandomNumber(baseTd,0,arrColor.length);//получаем массив цветов
+						funRecordInTdFromArray(arrNumberRandom,arrFontSize,takeArrColor);//записываем число шрифт цвет
+						funAddEventOnTd();//вешаем событие на столбец
+						funLive(livels);//добавляем жизни
+						}
+						
+					function funNotTrueNumber(num)//функция если нажали не на тот номер
+						{
+						var audio1=new Audio();
+						audio1.src="2.mp3";
+						audio1.play();
+						num.setAttribute("id","funNotTrueNum");
+						}
+						
+					function funNotTrueNumber1(num)//функция если нажали на правельный номер
+						{
+						var a=table.querySelectorAll("tr");
+						var jj=0;
+						for(var i=0; i<a.length; i++)
+							{
+							var sumTd=a[i].querySelectorAll("td");
+							for(var j=0; j<sumTd.length;jj++, j++)
+								{
+								sumTd[j].setAttribute("id","funNotTrueNum");
+								}
+							}
+						var audio1=new Audio();
+						audio1.src="2.mp3";
+						audio1.play();
+						}	
+		</script>
+		
+ 	</body>
+</html>
