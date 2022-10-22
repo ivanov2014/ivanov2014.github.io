@@ -1,10 +1,10 @@
-# my name is Sergey Ivanov
-[Knowledge test java script](https://ivanov2014.github.io/projects/project_test_js/ "Тест на знание js") - Выполнение тестового задания
+# Здесь будут проекты на реакте
+[Проект 1](https://ivanov2014.github.io/projects/projects_react/ "Проект 1") - Проект на реакте номер 1
 
 
-[test java script](https://ivanov2014.github.io/projects/test/ "Тест") - Небольшой проект
+[Проект 2](https://ivanov2014.github.io/projects/projects_react/ "Проект 2") - Проект на реакте номер 2
 
 
-[test java script](https://ivanov2014.github.io/projects/game/ "Игра") - Эту игрушку написал через 3 месяца изучения js
+[Проект 3](https://ivanov2014.github.io/projects/projects_react/ "Проект 3") - Проект на реакте номер 3
 
-[Project on React](https://ivanov2014.github.io/projects/projects_react/ "Проекты написаные при помощи React") - Проекты написаные при помощи React
+
